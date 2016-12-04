@@ -1,0 +1,38 @@
+@model AnalyseVisitorsTool.Models.HomeViewModels.LocationsViewModel
+@{
+    // ViewBag.Title = "Locations Page";
+}
+<div class="row">
+    <form asp-action="Locations" method="POST">
+        <div class="col-md-12">
+            <h2>Orte</h2>
+            <div class="form-group form-horizontal">
+                <select asp-for="@Model.Country" class="form-control">
+                    @foreach(var country in Model.Countries) {
+                        <option value="@country">@country</option>
+                    }
+                </select>
+                <a asp-action="Locations" class="btn btn-danger">reset</a>
+                <input type="submit" class="btn btn-success" value="filtern" />
+            </div>
+            <table class="table table-bordered table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>IP-Adresse</th>
+                        <th class="cityth">Stadt</th>
+                        <th>Land</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var location in Model.IPLocations) {
+                        <tr>
+                            <td><a asp-action="Location" asp-route-id="@location.ID">@location.ipAddress</a></td>
+                            <td>@location.cityName</td>
+                            <td>@location.countryName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

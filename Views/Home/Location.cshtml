@@ -1,0 +1,58 @@
+@model AnalyseVisitorsTool.Models.HomeViewModels.LocationViewModel
+@{
+    ViewBag.Title = Model.CurrentLocation.cityName + " " + Model.CurrentLocation.countryName;
+}
+@section head {
+    <link rel="stylesheet" href="https://developers.google.com/maps/documentation/javascript/demos/demos.css">
+}
+<div class="row">
+    <div class="col-md-12">
+        <h2>@Model.CurrentLocation.cityName - @Model.CurrentLocation.countryName</h2>
+        <div id="map"></div>
+        <div id="logsarea">
+            <h3>Besuche von dieser Seite</h3>
+            <table class="table table-hover table-responsive table-bordered">
+                <thead>
+                    <tr>
+                        <th class="timeth">Zeit</th>
+                        <th>Methode</th>
+                        <th>Aufruf</th>
+                        <th>User Agent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var logfile in @Model.ServerLogFiles) {
+                        <tr>
+                            <td>@logfile.TimeStamp.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                            <td>@logfile.Method</td>
+                            <td>@logfile.UriQuery</td>
+                            <td>@logfile.ClientUserAgent</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>   
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initMap();
+        });
+
+        function initMap() {
+            var myLatLng = { lat: @Model.CurrentLocation.latitude, lng: @Model.CurrentLocation.longitude };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                scrollwheel: false,
+                zoom: 16
+            });
+            var marker = new google.maps.Marker({
+              map: map,
+              position: myLatLng,
+              title: '@Model.CurrentLocation.cityName'
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async defer></script>
+}

@@ -1,0 +1,17 @@
+@model AnalyseVisitorsTool.Models.HomeViewModels.SetupViewModel
+@{
+    ViewBag.Title = "Einstellungen";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Einstellungen</h2>
+        <form asp-action="Setup" method="POST" class="form-group">
+            <label>Server-Log-Dateien-Ordner</label>
+            <div class="form-group form-horizontal">
+                <input type="text" asp-for="@Model.LogFilesFolder" class="form-control" />
+                <a asp-action="AnalyseServerLogFiles" class="btn btn-danger" data-toggle="modal" data-target="#loading">Serverlogs auswerten</a>
+                <input type="submit" class="btn btn-success" value="speichern" />
+            </div>
+        </form>
+    </div>
+</div>
