@@ -16,10 +16,10 @@ namespace AnalyseVisitorsTool.Models.AccountViewModels
 
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "Diesen Browser erinnern?")]
         public bool RememberBrowser { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Erinnern?")]
         public bool RememberMe { get; set; }
     }
 }
