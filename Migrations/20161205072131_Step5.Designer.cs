@@ -8,9 +8,10 @@ using AnalyseVisitorsTool.Data;
 namespace AnalyseVisitorsTool.Migrations
 {
     [DbContext(typeof(LogDbContext))]
-    partial class LogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161205072131_Step5")]
+    partial class Step5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");

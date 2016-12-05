@@ -6,12 +6,20 @@
     <div class="col-md-12">
         <h2>Einstellungen</h2>
         <form asp-action="Setup" method="POST" class="form-group">
-            <label>Server-Log-Dateien-Ordner</label>
             <div class="form-group form-horizontal">
-                <input type="text" asp-for="@Model.LogFilesFolder" class="form-control" />
-                <a asp-action="AnalyseServerLogFiles" class="btn btn-danger" data-toggle="modal" data-target="#loading">Serverlogs auswerten</a>
-                <input type="submit" class="btn btn-success" value="speichern" />
+                <label>Google Maps API-Key</label>
+                <input type="text" class="form-control" asp-for="@Model.GoogleMapsAPIKey" />
             </div>
+            <div class="form-group form-horizontal">
+                <label>IPInfoDB API-Key</label>
+                <input type="text" class="form-control" asp-for="@Model.IPLocationAPIKey" />
+            </div>
+            <div class="form-group form-horizontal">
+                <label>Server-Log-Dateien-Ordner</label>
+                <input type="text" asp-for="@Model.LogFilesFolder" class="form-control" />
+                <a asp-action="AnalyseServerLogFiles" class="btn btn-danger">Serverlogs auswerten</a>
+            </div>
+            <input type="submit" class="btn btn-success" value="speichern" />
         </form>
     </div>
 </div>

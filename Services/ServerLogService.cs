@@ -18,7 +18,7 @@ namespace AnalyseVisitorsTool.Services
         private IServerLogRepository _serverlogrepository;
         private IIPLocationRepository _iplocationrepository;
         private ISettingsRepository _settingsrepository;
-        private const string apikey = "";
+        private string apikey;
 
         public ServerLogService(IServerLogRepository serverlogrepository, IIPLocationRepository iplocationrepository,
                                 ISettingsRepository settingsrepository)
@@ -27,6 +27,7 @@ namespace AnalyseVisitorsTool.Services
             this._serverlogrepository = serverlogrepository;
             this._iplocationrepository = iplocationrepository;
             this._settingsrepository = settingsrepository;
+            this.apikey = this._settingsrepository.GetAll().OrderByDescending(s => s.ID).First().IPLocationAPIKey;
         }
 
         public async Task SetLocation(ServerLogFile file)
@@ -84,8 +85,7 @@ namespace AnalyseVisitorsTool.Services
                 foreach (var filename in filenames) {
                     var files = File.ReadAllLines(filename);
                     foreach (var file in files) {
-                        var fileinfo = new FileInfo(file);
-                        if (!file.StartsWith("#") && fileinfo.LastWriteTimeUtc > DateTime.UtcNow.AddDays(-7)) {
+                        if (!file.StartsWith("#")) {
                             var logfile = new ServerLogFile();
                             var splittedfile = file.Split(' ');
                             if (!splittedfile[8].Contains(":") && !splittedfile[8].StartsWith("192.168") && !splittedfile[8].StartsWith("127.0.0.1")) {
@@ -119,7 +119,6 @@ namespace AnalyseVisitorsTool.Services
                     }
                 }
             } catch {
-
             }
         }
 
@@ -134,10 +133,10 @@ namespace AnalyseVisitorsTool.Services
 
         public void BuildServerLogDatabaseEntries()
         {
-            /*foreach (var f in this._serverlogrepository.GetAll()) {
+            foreach (var f in this._serverlogrepository.GetAll()) {
                 this._serverlogrepository.Remove(f);
             }
-            this._serverlogrepository.Save();*/
+            this._serverlogrepository.Save();
             var logsfolder = string.Empty;
             if (this._settingsrepository.GetAll().Count() > 0) {
                 logsfolder = this._settingsrepository.GetAll().OrderByDescending(l => l.ID).First().ServerLogFilesFolder;

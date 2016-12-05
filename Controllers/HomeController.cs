@@ -66,6 +66,7 @@ namespace AnalyseVisitorsTool.Controllers
             var lvm = new LocationViewModel();
             lvm.CurrentLocation = this._iplocationrepository.Get(l => l.ID.Equals(id));
             lvm.ServerLogFiles = this._serverlogrepository.Find(l => l.ClientIP.Equals(lvm.CurrentLocation.ipAddress)).OrderByDescending(l => l.TimeStamp);
+            lvm.GoogleMapsAPIKey = this._settingsrepository.GetAll().OrderByDescending(l => l.ID).First().GoogleMapsAPIKey;
             return View(lvm);
         }
 
@@ -146,7 +147,10 @@ namespace AnalyseVisitorsTool.Controllers
         {
             var svm = new SetupViewModel();
             if (this._settingsrepository.GetAll().Count() > 0) {
-                svm.LogFilesFolder = this._settingsrepository.GetAll().OrderByDescending(l => l.ID).First().ServerLogFilesFolder;
+                var setup = this._settingsrepository.GetAll().OrderByDescending(l => l.ID).First();
+                svm.LogFilesFolder = setup.ServerLogFilesFolder;
+                svm.GoogleMapsAPIKey = setup.GoogleMapsAPIKey;
+                svm.IPLocationAPIKey = setup.IPLocationAPIKey;
             }
             return View(svm);
         }
@@ -156,6 +160,8 @@ namespace AnalyseVisitorsTool.Controllers
         {
             var setup = new Settings();
             setup.ServerLogFilesFolder = svm.LogFilesFolder;
+            setup.GoogleMapsAPIKey = svm.GoogleMapsAPIKey;
+            setup.IPLocationAPIKey = svm.IPLocationAPIKey;
             this._settingsservice.UpdateSettings(setup);
             return View(svm);
         }

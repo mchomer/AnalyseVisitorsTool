@@ -6,5 +6,6 @@ namespace AnalyseVisitorsTool.Models.HomeViewModels
     {
         public IPLocation CurrentLocation { get; set; }
         public IEnumerable<ServerLogFile> ServerLogFiles { get; set; }
+        public string GoogleMapsAPIKey { get; set; }
     }
 }
