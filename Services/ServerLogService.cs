@@ -133,10 +133,6 @@ namespace AnalyseVisitorsTool.Services
 
         public void BuildServerLogDatabaseEntries()
         {
-            foreach (var f in this._serverlogrepository.GetAll()) {
-                this._serverlogrepository.Remove(f);
-            }
-            this._serverlogrepository.Save();
             var logsfolder = string.Empty;
             if (this._settingsrepository.GetAll().Count() > 0) {
                 logsfolder = this._settingsrepository.GetAll().OrderByDescending(l => l.ID).First().ServerLogFilesFolder;
