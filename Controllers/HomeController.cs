@@ -124,9 +124,6 @@ namespace AnalyseVisitorsTool.Controllers
             var ivm = new IndexViewModel();
             ivm.ServerLogFiles = this._serverlogrepository.Find(l => string.IsNullOrEmpty(l.City))
                                     .OrderByDescending(l => l.TimeStamp).ToList();
-            ivm.ServerLogFiles = this._serverlogservice.SetLocationIDs(ivm.ServerLogFiles);
-            ivm.ServerLogFiles = this._serverlogrepository.Find(l => l.LocationID < 1)
-                                    .OrderByDescending(l => l.TimeStamp).ToList();
             ivm.TotalEntries = ivm.ServerLogFiles.Select(l => l.ClientIP).Distinct().Count();
             return View(ivm);
         }
@@ -134,9 +131,6 @@ namespace AnalyseVisitorsTool.Controllers
         public IActionResult UpdateMissingLocations()
         {
             var logs = this._serverlogrepository.Find(l => string.IsNullOrEmpty(l.City))
-                                    .OrderByDescending(l => l.TimeStamp).ToList();
-            logs = this._serverlogservice.SetLocationIDs(logs).ToList();
-            logs = this._serverlogrepository.Find(l => l.LocationID < 1)
                                     .OrderByDescending(l => l.TimeStamp).ToList();
             this._serverlogservice.UpdateMissingLocations(logs);
             return RedirectToAction("MissingIPLocations");

@@ -74,6 +74,12 @@ namespace AnalyseVisitorsTool.Services
             file.Latitude = iplocation.latitude ?? "";
             if (!this._serverlogrepository.DoesEntryAlreadyExist(file)) {
                 this._serverlogrepository.Add(file);
+            } else {
+                var entry = this._serverlogrepository.Get(s => s.ID.Equals(file.ID));
+                if (entry.LocationID < 0) {
+                    this._serverlogrepository.Remove(entry);
+                    this._serverlogrepository.Add(file);
+                }
             }
         }
 
@@ -125,7 +131,6 @@ namespace AnalyseVisitorsTool.Services
         public void UpdateMissingLocations(List<ServerLogFile> logs)
         {
             foreach (var log in logs) {
-                this._serverlogrepository.Remove(log);
                 this.SetLocation(log).Wait();
             }
             this._serverlogrepository.Save();
