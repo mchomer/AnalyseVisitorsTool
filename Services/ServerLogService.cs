@@ -27,7 +27,11 @@ namespace AnalyseVisitorsTool.Services
             this._serverlogrepository = serverlogrepository;
             this._iplocationrepository = iplocationrepository;
             this._settingsrepository = settingsrepository;
-            this.apikey = this._settingsrepository.GetAll().OrderByDescending(s => s.ID).First().IPLocationAPIKey;
+            if (this._settingsrepository.GetAll().OrderByDescending(s => s.ID).Count() > 0) {
+                this.apikey = this._settingsrepository.GetAll().OrderByDescending(s => s.ID).First().IPLocationAPIKey;
+            } else {
+                this.apikey = string.Empty;
+            }
         }
 
         public async Task SetLocation(ServerLogFile file)

@@ -66,7 +66,9 @@ namespace AnalyseVisitorsTool.Controllers
             var lvm = new LocationViewModel();
             lvm.CurrentLocation = this._iplocationrepository.Get(l => l.ID.Equals(id));
             lvm.ServerLogFiles = this._serverlogrepository.Find(l => l.ClientIP.Equals(lvm.CurrentLocation.ipAddress)).OrderByDescending(l => l.TimeStamp);
-            lvm.GoogleMapsAPIKey = this._settingsrepository.GetAll().OrderByDescending(l => l.ID).First().GoogleMapsAPIKey;
+            if (this._settingsrepository.GetAll().OrderByDescending(l => l.ID).Count() > 0) {
+                lvm.GoogleMapsAPIKey = this._settingsrepository.GetAll().OrderByDescending(l => l.ID).First().GoogleMapsAPIKey;
+            }
             return View(lvm);
         }
 
@@ -115,8 +117,6 @@ namespace AnalyseVisitorsTool.Controllers
             ivm.ServerLogFiles = this._serverlogservice.SetLocationIDs(ivm.ServerLogFiles);
             return View(ivm);
         }
-
-
 
         [HttpGet]
         public IActionResult MissingIPLocations()

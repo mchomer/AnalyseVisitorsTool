@@ -9,9 +9,8 @@ namespace AnalyseVisitorsTool.Data
         public DbSet<IPLocation> IPLocations { get; set; }
         public DbSet<Settings> Setup { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public LogDbContext(DbContextOptions<LogDbContext> options) : base(options)
         {
-            optionsBuilder.UseSqlite("Filename=./AnalyseVisitorsTool.db");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
