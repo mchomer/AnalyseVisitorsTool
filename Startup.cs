@@ -96,8 +96,7 @@ namespace AnalyseVisitorsTool
                 Authorization = new[] { new HangfireAuthorizationFilter(signinmanager, httpcontext) }
             });
             app.UseHangfireServer(new BackgroundJobServerOptions(),null, new PostgreSqlStorage(Configuration.GetConnectionString("psqlConnection")));
-            //RecurringJob.AddOrUpdate(() => serverlogservice.BuildServerLogDatabaseEntries(), Cron.Daily);
-            
+            RecurringJob.AddOrUpdate<IServerLogService>(s => s.BuildServerLogDatabaseEntries(), Cron.Daily);
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

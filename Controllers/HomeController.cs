@@ -6,6 +6,7 @@ using AnalyseVisitorsTool.Data.Enums;
 using AnalyseVisitorsTool.Models;
 using AnalyseVisitorsTool.Models.HomeViewModels;
 using AnalyseVisitorsTool.Services;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -74,7 +75,7 @@ namespace AnalyseVisitorsTool.Controllers
 
         public IActionResult AnalyseServerLogFiles()
         {
-            this._serverlogservice.BuildServerLogDatabaseEntries();
+            BackgroundJob.Enqueue<IServerLogService>(s => s.BuildServerLogDatabaseEntries());
             return RedirectToAction("Index");
         }
 
@@ -128,11 +129,13 @@ namespace AnalyseVisitorsTool.Controllers
             return View(ivm);
         }
 
+        [HttpPost]
         public IActionResult UpdateMissingLocations()
         {
             var logs = this._serverlogrepository.Find(l => string.IsNullOrEmpty(l.City))
                                     .OrderByDescending(l => l.TimeStamp).ToList();
             this._serverlogservice.UpdateMissingLocations(logs);
+            BackgroundJob.Enqueue<IServerLogService>(s => s.UpdateMissingLocations(logs));
             return RedirectToAction("MissingIPLocations");
         }
 
