@@ -18,6 +18,9 @@
                 <label>Server-Log-Dateien-Ordner</label>
                 <input type="text" asp-for="@Model.LogFilesFolder" class="form-control" />
                 <a asp-action="AnalyseServerLogFiles" class="btn btn-danger">Serverlogs auswerten</a>
+                <p>
+                    Stößt einen Job im Hintergrund an, der die Serverlogs auswertet.
+                </p>
             </div>
             <input type="submit" class="btn btn-success" value="speichern" />
         </form>

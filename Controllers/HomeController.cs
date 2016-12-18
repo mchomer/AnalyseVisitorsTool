@@ -129,14 +129,13 @@ namespace AnalyseVisitorsTool.Controllers
             return View(ivm);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult UpdateMissingLocations()
         {
             var logs = this._serverlogrepository.Find(l => string.IsNullOrEmpty(l.City))
                                     .OrderByDescending(l => l.TimeStamp).ToList();
-            this._serverlogservice.UpdateMissingLocations(logs);
             BackgroundJob.Enqueue<IServerLogService>(s => s.UpdateMissingLocations(logs));
-            return RedirectToAction("MissingIPLocations");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

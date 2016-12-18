@@ -25,28 +25,29 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></span>
+                    <span class="icon-bar"><a asp-controller="Home" asp-action="Index"></a></span>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <span class="icon-bar"><a asp-area="" asp-controller="Home" asp-action="VisitsToday">Heute</a></span>
-                        <span class="icon-bar"><a asp-area="" asp-controller="Home" asp-action="Locations">Orte</a></span>
-                        <span class="icon-bar"><a asp-area="" asp-controller="Home" asp-action="MostVisits">Häufigsten Besuche</a></span>
-                        <span class="icon-bar"><a asp-area="" asp-controller="Home" asp-action="MissingIPLocations">Fehlende IP-Auflösungen</a></span>
-                        <span class="icon-bar"><a asp-area="" asp-controller="Home" asp-action="Setup">Einstellungen</a></span>
+                        <span class="icon-bar"><a asp-controller="Home" asp-action="VisitsToday"></a></span>
+                        <span class="icon-bar"><a asp-controller="Home" asp-action="Locations"></a></span>
+                        <!--
+                        <span class="icon-bar"><a asp-controller="Home" asp-action="MostVisits"></a></span>
+                        <span class="icon-bar"><a asp-controller="Home" asp-action="MissingIPLocations"></a></span>
+                        <span class="icon-bar"><a asp-controller="Home" asp-action="Setup"></a></span>
+                        -->
                     }
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">AnalyseVisitorsTool</a>
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand">AnalyseVisitorsTool</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="VisitsToday">Heute</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Locations">Orte</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="MostVisits">Häufigsten Besuche</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="MissingIPLocations">Fehlende IP-Auflösungen</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Setup">Einstellungen</a></li>
+                        <li><a asp-controller="Home" asp-action="VisitsToday">Heute</a></li>
+                        <li><a asp-controller="Home" asp-action="Locations">Orte</a></li>
+                        <li><a asp-controller="Home" asp-action="MostVisits">Häufigsten Besuche</a></li>
+                        <li><a asp-controller="Home" asp-action="MissingIPLocations">Fehlende IP-Auflösungen</a></li>
+                        <li><a asp-controller="Home" asp-action="Setup">Einstellungen</a></li>
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
